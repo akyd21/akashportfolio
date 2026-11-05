@@ -21,7 +21,7 @@ section:first-of-type{padding-top:2rem}
 
 .hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;position:relative}
 .hero-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent2);border:1px solid rgba(0,217,255,0.3);padding:4px 14px;border-radius:20px;margin-bottom:1.5rem;letter-spacing:1px}
-.hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:700;line-height:1.1;margin-bottom:1rem}
+.hero h1{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:1rem}
 .hero h1 span{color:var(--accent)}
 .terminal-line{font-family:'JetBrains Mono',monospace;font-size:clamp(14px,2vw,17px);color:var(--accent2);margin-bottom:2rem;min-height:1.5em}
 .cursor{display:inline-block;width:2px;height:1em;background:var(--accent2);vertical-align:middle;margin-left:2px;animation:blink 1s step-end infinite}
@@ -160,7 +160,7 @@ section:first-of-type{padding-top:2rem}
 footer{border-top:1px solid var(--border);text-align:center;padding:2rem;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
 .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
 .fade-in.visible{opacity:1;transform:translateY(0)}
-@media(max-width:640px){.contact-wrap{grid-template-columns:1fr}.hero h1{font-size:2.1rem}.nav-links{display:none}.hero-3d{right:-150px;opacity:0.35}}
+@media(max-width:640px){.contact-wrap{grid-template-columns:1fr}.hero h1{font-size:1.8rem}.nav-links{display:none}.hero-3d{right:-150px;opacity:0.35}}
 </style>
 
 <nav>
@@ -447,6 +447,7 @@ if(window.matchMedia('(pointer:fine)').matches && !window.matchMedia('(prefers-r
 
 const repoGrid=document.getElementById('github-repos');
 const repoStatus=document.getElementById('repo-status');
+const hiddenRepos=new Set(['Akashraj2106','Student_LMS_Portal','Spring-Boot-REST-API','Ak_Food_corner','college_db']);
 function renderRepos(repos){
   repoStatus.textContent=repos.length?`${repos.length} public repositor${repos.length===1?'y':'ies'}`:'No public repositories found.';
   repos.forEach(repo=>{
@@ -461,6 +462,6 @@ function renderRepos(repos){
 }
 fetch('https://api.github.com/users/akyd21/repos?per_page=100&sort=updated')
   .then(response=>{if(!response.ok)throw new Error('GitHub request failed');return response.json()})
-  .then(repos=>renderRepos(repos))
+  .then(repos=>renderRepos(repos.filter(repo=>!hiddenRepos.has(repo.name))))
   .catch(()=>{repoStatus.textContent='Repositories are temporarily unavailable. View them on GitHub.'});
 </script>
