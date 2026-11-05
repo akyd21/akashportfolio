@@ -99,9 +99,6 @@ section:first-of-type{padding-top:2rem}
 .proj-card h3{font-size:15px;font-weight:600;margin-bottom:0.6rem}
 .proj-card p{font-size:13px;color:var(--muted);line-height:1.6;flex:1;margin-bottom:1rem}
 .proj-stack{display:flex;flex-wrap:wrap;gap:4px}
-.repo-section{margin-top:3rem}
-.repo-section-title{font-size:1.25rem;font-weight:600;margin-bottom:1rem}
-.repo-status{font-size:13px;color:var(--muted);margin-bottom:1rem}
 .repo-meta{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:auto;padding-top:1rem;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px}
 .repo-language{color:var(--accent2)}
 
@@ -219,7 +216,6 @@ footer{border-top:1px solid var(--border);text-align:center;padding:2rem;font-fa
     <div class="skill-card"><div class="skill-card-icon"><i class="ti ti-database" aria-hidden="true" style="color:#6C63FF"></i></div><h3>Databases</h3><div class="skill-tags"><span class="tag accent">MySQL</span><span class="tag accent">MongoDB</span><span class="tag">H2</span><span class="tag">MongoDB Atlas</span></div></div>
     <div class="skill-card"><div class="skill-card-icon"><i class="ti ti-tools" aria-hidden="true" style="color:#00D9FF"></i></div><h3>Tools &amp; Concepts</h3><div class="skill-tags"><span class="tag">Maven</span><span class="tag">Git / GitHub</span><span class="tag">DSA</span><span class="tag">OOP</span><span class="tag">MVC</span><span class="tag">DTO Pattern</span><span class="tag">AOP</span><span class="tag">DBMS</span></div></div>
     <div class="skill-card"><div class="skill-card-icon"><i class="ti ti-chart-dots-3" aria-hidden="true" style="color:#f59e0b"></i></div><h3>Data Science &amp; AI</h3><div class="skill-tags"><span class="tag accent">LangChain</span><span class="tag teal">NumPy</span><span class="tag teal">Pandas</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag accent">Scikit-learn</span></div></div>
-    <div class="skill-card"><div class="skill-card-icon"><i class="ti ti-layout" aria-hidden="true" style="color:#a09cff"></i></div><h3>Frontend Exposure</h3><div class="skill-tags"><span class="tag">React</span><span class="tag">Thymeleaf</span><span class="tag">Tailwind CSS</span><span class="tag">Vite</span></div></div>
     <div class="skill-card"><div class="skill-card-icon"><i class="ti ti-cloud" aria-hidden="true" style="color:#00D9FF"></i></div><h3>Cloud &amp; Deployment</h3><div class="skill-tags"><span class="tag teal">Render</span><span class="tag teal">MongoDB Atlas</span><span class="tag">Gmail SMTP</span></div></div>
   </div>
 </section>
@@ -250,18 +246,13 @@ footer{border-top:1px solid var(--border);text-align:center;padding:2rem;font-fa
       </ul>
     </div>
   </div>
-  <div class="repo-section">
-    <div class="repo-section-title">Public GitHub Repositories</div>
-    <div class="repo-status" id="repo-status">Loading repositories...</div>
-    <div class="proj-grid" id="github-repos" aria-live="polite"></div>
-  </div>
 </section>
 
 <section id="projects" class="fade-in">
   <div class="sec-label">// things i've built</div>
   <div class="sec-title">Projects</div>
   <div class="sec-line"></div>
-  <div class="proj-grid">
+  <div class="proj-grid" id="github-repos" aria-live="polite">
     <div class="proj-card featured">
       <div class="proj-top">
         <i class="ti ti-building-hospital" aria-hidden="true" style="color:#6C63FF;font-size:24px"></i>
@@ -447,10 +438,8 @@ if(window.matchMedia('(pointer:fine)').matches && !window.matchMedia('(prefers-r
 }
 
 const repoGrid=document.getElementById('github-repos');
-const repoStatus=document.getElementById('repo-status');
 const hiddenRepos=new Set(['Akashraj2106','Student_LMS_Portal','Spring-Boot-REST-API','Ak_Food_corner','college_db']);
 function renderRepos(repos){
-  repoStatus.textContent=repos.length?`${repos.length} public repositor${repos.length===1?'y':'ies'}`:'No public repositories found.';
   repos.forEach(repo=>{
     const card=document.createElement('article');
     card.className='proj-card';
@@ -464,5 +453,5 @@ function renderRepos(repos){
 fetch('https://api.github.com/users/akyd21/repos?per_page=100&sort=updated')
   .then(response=>{if(!response.ok)throw new Error('GitHub request failed');return response.json()})
   .then(repos=>renderRepos(repos.filter(repo=>!hiddenRepos.has(repo.name))))
-  .catch(()=>{repoStatus.textContent='Repositories are temporarily unavailable. View them on GitHub.'});
+  .catch(()=>{});
 </script>
